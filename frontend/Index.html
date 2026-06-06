@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Linkit — Save every link that matters</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#06080f;
+  --bg2:#0b0e1a;
+  --bg3:#10142b;
+  --surface:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --accent:#4f6ef7;
+  --accent2:#a78bfa;
+  --accent3:#22d3a5;
+  --text:#eef0ff;
+  --text2:#8892b0;
+  --text3:#3d4a6b;
+  --r:12px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Epilogue',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:.5;
+}
+
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px)}
+.b1{width:700px;height:700px;background:rgba(79,110,247,0.1);top:-200px;left:-150px}
+.b2{width:500px;height:500px;background:rgba(167,139,250,0.08);bottom:-100px;right:-100px}
+.b3{width:300px;height:300px;background:rgba(34,211,165,0.07);top:40%;left:55%}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  height:64px;
+  background:rgba(6,8,15,0.75);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.nav-logo{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-logo svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.2;stroke-linecap:round}
+.nav-name{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn-ghost{
+  padding:8px 18px;
+  border:1px solid var(--border2);
+  border-radius:8px;
+  background:transparent;
+  color:var(--text2);
+  font-family:'Epilogue',sans-serif;
+  font-size:14px;font-weight:500;
+  cursor:pointer;text-decoration:none;
+  transition:all .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.28);color:var(--text)}
+.btn-filled{
+  padding:8px 20px;
+  border:none;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;
+  font-family:'Epilogue',sans-serif;
+  font-size:14px;font-weight:500;
+  cursor:pointer;text-decoration:none;
+  transition:opacity .2s,transform .15s;
+}
+.btn-filled:hover{opacity:.88}
+.btn-filled:active{transform:scale(.97)}
+
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:100px 5% 80px;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(79,110,247,0.1);
+  border:1px solid rgba(79,110,247,0.25);
+  border-radius:100px;
+  padding:5px 14px;
+  font-size:13px;font-weight:500;
+  color:#7b9bfa;
+  margin-bottom:2rem;
+  animation:fadeUp .5s ease both;
+}
+.hero-badge span{width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block}
+
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.8rem,7vw,5.5rem);
+  font-weight:800;
+  line-height:1.07;
+  letter-spacing:-2px;
+  max-width:820px;
+  margin-bottom:1.5rem;
+  animation:fadeUp .5s .08s ease both;
+}
+
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.2rem);
+  color:var(--text2);
+  max-width:520px;
+  line-height:1.7;
+  margin-bottom:2.5rem;
+  font-weight:300;
+  animation:fadeUp .5s .16s ease both;
+}
+
+.hero-actions{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .5s .24s ease both;
+  margin-bottom:5rem;
+}
+
+.btn-cta{
+  padding:14px 32px;
+  border:none;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;
+  font-family:'Epilogue',sans-serif;
+  font-size:16px;font-weight:500;
+  cursor:pointer;text-decoration:none;
+  transition:opacity .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 0 40px rgba(79,110,247,0.3);
+}
+.btn-cta:hover{opacity:.9;box-shadow:0 0 60px rgba(79,110,247,0.4)}
+.btn-cta:active{transform:scale(.97)}
+.btn-outline-cta{
+  padding:14px 28px;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  background:transparent;
+  color:var(--text2);
+  font-family:'Epilogue',sans-serif;
+  font-size:16px;font-weight:500;
+  cursor:pointer;text-decoration:none;
+  transition:all .2s;
+}
+.btn-outline-cta:hover{border-color:rgba(255,255,255,0.28);color:var(--text)}
+
+.url-visual{
+  position:relative;
+  width:100%;max-width:680px;
+  animation:fadeUp .5s .32s ease both;
+}
+
+.browser-frame{
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  overflow:hidden;
+}
+.browser-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;
+  background:var(--bg3);
+  border-bottom:1px solid var(--border);
+}
+.browser-dots{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot-r{background:#ff5f56}.dot-y{background:#ffbd2e}.dot-g{background:#27c93f}
+
+.url-bar{
+  flex:1;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:6px;
+  padding:6px 12px;
+  font-size:13px;
+  color:var(--text2);
+  display:flex;align-items:center;gap:8px;
+  font-family:'Epilogue',sans-serif;
+}
+.url-bar .lock{color:var(--accent3);font-size:12px}
+.url-typing{
+  color:var(--text);
+  overflow:hidden;
+  white-space:nowrap;
+  border-right:2px solid var(--accent);
+  animation:typing 3s steps(40,end) infinite, blink .75s step-end infinite;
+}
+@keyframes typing{
+  0%{width:0}50%{width:100%}90%{width:100%}100%{width:0}
+}
+@keyframes blink{50%{border-color:transparent}}
+
+.browser-content{padding:20px}
+.saved-links-preview{display:flex;flex-direction:column;gap:10px}
+.preview-card{
+  display:flex;align-items:center;gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 14px;
+  animation:fadeIn .4s ease both;
+}
+.preview-card:nth-child(2){animation-delay:.1s}
+.preview-card:nth-child(3){animation-delay:.2s}
+.preview-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.preview-info{flex:1;min-width:0}
+.preview-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-url{font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-tag{
+  font-size:11px;padding:3px 8px;border-radius:100px;
+  background:rgba(79,110,247,0.15);color:#7b9bfa;
+  white-space:nowrap;
+}
+
+section{position:relative;z-index:1;padding:100px 5%}
+.section-inner{max-width:1060px;margin:0 auto}
+
+.section-label{
+  font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;letter-spacing:-1px;
+  line-height:1.15;margin-bottom:1rem;
+}
+.section-sub{color:var(--text2);font-size:1.05rem;max-width:520px;font-weight:300;margin-bottom:3.5rem}
+
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:16px;
+}
+
+.feature-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.75rem;
+  transition:border-color .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  opacity:0;transition:opacity .2s;
+}
+.feature-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.feature-card:hover::before{opacity:1}
+.fc-blue::before{background:linear-gradient(90deg,#4f6ef7,#a78bfa)}
+.fc-green::before{background:linear-gradient(90deg,#22d3a5,#4f6ef7)}
+.fc-amber::before{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+.fc-pink::before{background:linear-gradient(90deg,#ec4899,#a78bfa)}
+.fc-teal::before{background:linear-gradient(90deg,#06b6d4,#22d3a5)}
+.fc-orange::before{background:linear-gradient(90deg,#f97316,#f59e0b)}
+
+.feature-icon{
+  width:44px;height:44px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:1rem;
+}
+.fi-blue{background:rgba(79,110,247,0.15)}
+.fi-green{background:rgba(34,211,165,0.12)}
+.fi-amber{background:rgba(245,158,11,0.12)}
+.fi-pink{background:rgba(236,72,153,0.12)}
+.fi-teal{background:rgba(6,182,212,0.12)}
+.fi-orange{background:rgba(249,115,22,0.12)}
+
+.feature-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;margin-bottom:.5rem}
+.feature-body{font-size:14px;color:var(--text2);line-height:1.65;font-weight:300}
+
+.usecases{display:flex;flex-direction:column;gap:0}
+.usecase{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  padding:60px 0;border-bottom:1px solid var(--border);
+}
+.usecase:last-child{border-bottom:none}
+.usecase.reverse .uc-visual{order:-1}
+.uc-tag{
+  display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;
+}
+.uc-title{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:700;letter-spacing:-.5px;margin-bottom:.75rem;line-height:1.2}
+.uc-body{color:var(--text2);font-size:15px;line-height:1.7;font-weight:300}
+
+.uc-visual{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.uc-mock-item{
+  display:flex;align-items:center;gap:12px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;
+}
+.uc-mock-icon{font-size:18px;flex-shrink:0}
+.uc-mock-text{flex:1;min-width:0}
+.uc-mock-title{font-size:12px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uc-mock-sub{font-size:11px;color:var(--text2)}
+.uc-mock-badge{font-size:10px;padding:2px 8px;border-radius:100px;white-space:nowrap}
+.badge-read{background:rgba(79,110,247,0.15);color:#7b9bfa}
+.badge-later{background:rgba(245,158,11,0.15);color:#fbbf24}
+.badge-buy{background:rgba(34,211,165,0.15);color:var(--accent3)}
+.badge-watch{background:rgba(236,72,153,0.15);color:#f472b6}
+
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+  margin-top:3rem;
+}
+.stat{
+  background:var(--bg2);padding:2.5rem;text-align:center;
+}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.25rem;
+}
+.stat-label{font-size:14px;color:var(--text2);font-weight:300}
+
+.cta-section{
+  text-align:center;
+  padding:100px 5%;
+  position:relative;z-index:1;
+}
+.cta-box{
+  max-width:640px;margin:0 auto;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:24px;
+  padding:4rem 3rem;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(79,110,247,0.12),transparent 65%);
+  pointer-events:none;
+}
+.cta-box h2{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;letter-spacing:-.8px;margin-bottom:.75rem}
+.cta-box p{color:var(--text2);margin-bottom:2rem;font-weight:300}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 5%;
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{display:flex;align-items:center;gap:8px;text-decoration:none}
+.footer-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
+footer p{font-size:13px;color:var(--text3)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  .usecase{grid-template-columns:1fr;gap:30px}
+  .usecase.reverse .uc-visual{order:0}
+  .stats-row{grid-template-columns:1fr}
+  .hero h1{letter-spacing:-1px}
+  .cta-box{padding:2.5rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="blobs">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </div>
+    <span class="nav-name">Linkit</span>
+  </a>
+  <div class="nav-actions">
+    <a href="auth.html" class="btn-ghost">Sign in</a>
+    <a href="auth.html?tab=register" class="btn-filled">Get started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span></span> Your personal link vault</div>
+  <h1>Save every link<br/>that <em>matters</em></h1>
+  <p class="hero-sub">The internet is full of things worth remembering. Linkit lets you save, organise, and find them whenever you need — no more lost tabs, no more forgotten bookmarks.</p>
+  <div class="hero-actions">
+    <a href="auth.html?tab=register" class="btn-cta">Start saving for free</a>
+    <a href="#features" class="btn-outline-cta">See how it works</a>
+  </div>
+
+  <div class="url-visual">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="url-bar">
+          <span class="lock">🔒</span>
+          <span class="url-typing">linkit.app/links</span>
+        </div>
+      </div>
+      <div class="browser-content">
+        <div class="saved-links-preview">
+          <div class="preview-card">
+            <div class="preview-icon" style="background:rgba(79,110,247,0.15)">📄</div>
+            <div class="preview-info">
+              <div class="preview-name">The Ultimate Guide to Deep Work</div>
+              <div class="preview-url">medium.com/productivity/deep-work-guide</div>
+            </div>
+            <div class="preview-tag">Read later</div>
+          </div>
+          <div class="preview-card">
+            <div class="preview-icon" style="background:rgba(34,211,165,0.12)">🛒</div>
+            <div class="preview-info">
+              <div class="preview-name">Mechanical Keyboard — Drop ALT</div>
+              <div class="preview-url">drop.com/buy/drop-alt-mechanical-keyboard</div>
+            </div>
+            <div class="preview-tag" style="background:rgba(34,211,165,0.15);color:#22d3a5">Wishlist</div>
+          </div>
+          <div class="preview-card">
+            <div class="preview-icon" style="background:rgba(236,72,153,0.12)">▶️</div>
+            <div class="preview-info">
+              <div class="preview-name">How Computers Work — Crash Course</div>
+              <div class="preview-url">youtube.com/watch?v=O5nskjZ_GoI</div>
+            </div>
+            <div class="preview-tag" style="background:rgba(236,72,153,0.15);color:#f472b6">Watch tonight</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">Everything your browser<br/>bookmarks wish they could do</h2>
+      <p class="section-sub">Simple, fast, and thoughtfully designed to keep your saved links actually useful.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fc-blue reveal">
+        <div class="feature-icon fi-blue">⚡</div>
+        <div class="feature-title">Save in seconds</div>
+        <div class="feature-body">Paste a URL and it's saved. No friction, no complicated forms — just the link and an optional note to remind you why you saved it.</div>
+      </div>
+      <div class="feature-card fc-green reveal">
+        <div class="feature-icon fi-green">🔍</div>
+        <div class="feature-title">Find anything instantly</div>
+        <div class="feature-body">Search by name across all your saved links. No more scrolling through hundreds of bookmarks trying to remember where something was.</div>
+      </div>
+      <div class="feature-card fc-amber reveal">
+        <div class="feature-icon fi-amber">📋</div>
+        <div class="feature-title">One-tap copy</div>
+        <div class="feature-body">Hit copy on any saved link to instantly get the URL on your clipboard — ready to share, open, or paste wherever you need it.</div>
+      </div>
+      <div class="feature-card fc-pink reveal">
+        <div class="feature-icon fi-pink">✏️</div>
+        <div class="feature-title">Edit anytime</div>
+        <div class="feature-body">Update the name, URL, or note on any saved link at any time. Your link library grows smarter as you add context over time.</div>
+      </div>
+      <div class="feature-card fc-teal reveal">
+        <div class="feature-icon fi-teal">🔒</div>
+        <div class="feature-title">Yours alone</div>
+        <div class="feature-body">Every link is private to your account. Nobody else can see, access, or modify what you've saved. Your vault, your rules.</div>
+      </div>
+      <div class="feature-card fc-orange reveal">
+        <div class="feature-icon fi-orange">🌐</div>
+        <div class="feature-title">Access anywhere</div>
+        <div class="feature-body">Your links live in the cloud, not on one device. Log in from your phone, laptop, or tablet and your entire collection is right there.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:60px 5%">
+  <div class="section-inner">
+    <div class="reveal" style="margin-bottom:3rem">
+      <p class="section-label">Use cases</p>
+      <h2 class="section-title">Never lose a great link again</h2>
+      <p class="section-sub">Whatever you find on the internet, Linkit has a place for it.</p>
+    </div>
+
+    <div class="usecases">
+
+      <div class="usecase reveal">
+        <div class="uc-text">
+          <span class="uc-tag">Articles &amp; reading</span>
+          <h3 class="uc-title">Found a great read? Save it for later.</h3>
+          <p class="uc-body">Stumbled on a long, insightful article but don't have time right now? Save it to Linkit with a note like "read on weekend" and it'll be waiting for you — no more 47 browser tabs open just to not forget something.</p>
+        </div>
+        <div class="uc-visual">
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">📰</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">The Science of Learning Anything Fast</div>
+              <div class="uc-mock-sub">jamesclear.com · saved just now</div>
+            </div>
+            <span class="uc-mock-badge badge-read">Read later</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">📖</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Why Stoicism Still Matters Today</div>
+              <div class="uc-mock-sub">philosophynow.org · 3 days ago</div>
+            </div>
+            <span class="uc-mock-badge badge-read">Read later</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🔬</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">How Sleep Affects Memory Consolidation</div>
+              <div class="uc-mock-sub">nature.com · 1 week ago</div>
+            </div>
+            <span class="uc-mock-badge badge-later">Later</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="usecase reverse reveal">
+        <div class="uc-text">
+          <span class="uc-tag">Shopping &amp; wishlists</span>
+          <h3 class="uc-title">Not ready to buy? Just save it.</h3>
+          <p class="uc-body">Saw a product you love but the timing isn't right? Save it to Linkit. Add a note about the price, the reason you want it, or when you plan to buy. Your wish list, your way.</p>
+        </div>
+        <div class="uc-visual">
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🎧</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Sony WH-1000XM5 Headphones</div>
+              <div class="uc-mock-sub">amazon.com · note: wait for sale</div>
+            </div>
+            <span class="uc-mock-badge badge-buy">Wishlist</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">💻</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">MacBook Air M3 — Space Grey</div>
+              <div class="uc-mock-sub">apple.com · note: next paycheck</div>
+            </div>
+            <span class="uc-mock-badge badge-buy">Wishlist</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">👟</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">New Balance 990v6 — White</div>
+              <div class="uc-mock-sub">newbalance.com · size 42</div>
+            </div>
+            <span class="uc-mock-badge badge-buy">Wishlist</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="usecase reveal">
+        <div class="uc-text">
+          <span class="uc-tag">Videos &amp; entertainment</span>
+          <h3 class="uc-title">Watch it tonight, not right now.</h3>
+          <p class="uc-body">Your friend shared a video, you're in the middle of something, and the YouTube algorithm is already pulling you somewhere else. Save it to Linkit and watch it on your own time, without losing it.</p>
+        </div>
+        <div class="uc-visual">
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🎬</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">How the Eiffel Tower Was Built</div>
+              <div class="uc-mock-sub">youtube.com · note: watch tonight</div>
+            </div>
+            <span class="uc-mock-badge badge-watch">Watch</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🎵</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Tems — Me &amp; U (Live Session)</div>
+              <div class="uc-mock-sub">youtube.com · shared by Kola</div>
+            </div>
+            <span class="uc-mock-badge badge-watch">Watch</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🎙️</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Lex Fridman × Sam Altman Podcast</div>
+              <div class="uc-mock-sub">spotify.com · 3hr episode</div>
+            </div>
+            <span class="uc-mock-badge badge-watch">Listen</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="usecase reverse reveal">
+        <div class="uc-text">
+          <span class="uc-tag">Research &amp; work</span>
+          <h3 class="uc-title">Keep your research in one place.</h3>
+          <p class="uc-body">Doing research for a project, essay, or decision? Save every relevant page to Linkit with notes on why it matters. No more copy-pasting links into a messy doc.</p>
+        </div>
+        <div class="uc-visual">
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">📊</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Nigeria Tech Startup Funding 2024</div>
+              <div class="uc-mock-sub">techcabal.com · market research</div>
+            </div>
+            <span class="uc-mock-badge badge-read">Research</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">📑</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">FastAPI Best Practices — 2024</div>
+              <div class="uc-mock-sub">github.com · reference for project</div>
+            </div>
+            <span class="uc-mock-badge badge-read">Reference</span>
+          </div>
+          <div class="uc-mock-item">
+            <span class="uc-mock-icon">🏠</span>
+            <div class="uc-mock-text">
+              <div class="uc-mock-title">Lekki 2-bed Apartment Listings</div>
+              <div class="uc-mock-sub">propertypro.ng · apartment hunt</div>
+            </div>
+            <span class="uc-mock-badge badge-later">Check</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding:60px 5% 100px">
+  <div class="section-inner">
+    <div class="stats-row reveal">
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Links you can save</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0s</div>
+        <div class="stat-label">Time to save a link</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Private to you</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="cta-box reveal">
+    <h2>Start saving<br/>what matters</h2>
+    <p>Free forever. No credit card. No nonsense.</p>
+    <a href="auth.html?tab=register" class="btn-cta">Create your free account</a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-brand">
+    <div class="nav-logo" style="width:28px;height:28px;border-radius:7px">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:white;fill:none;stroke-width:2.2;stroke-linecap:round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </div>
+    <span class="footer-name">Linkit</span>
+  </a>
+  <p>© 2026 Linkit. Built for the curious internet explorer.</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

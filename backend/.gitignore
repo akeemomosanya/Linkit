@@ -1,0 +1,5 @@
+.vscode
+__pycache__
+linkitenv
+.env
+.auth.log

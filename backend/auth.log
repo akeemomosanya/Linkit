@@ -1,0 +1,197 @@
+2024-12-13 15:06:09,729 - WARNING - Unauthorized login attempt for email: us@example.com
+2024-12-13 15:09:15,371 - WARNING - Failed login attempt: Incorrect password for email user@example.com
+2024-12-13 15:09:15,371 - WARNING - Unauthorized login attempt for email: user@example.com
+2024-12-13 15:53:14,059 - INFO - User with ID 3 logged in successfully.
+2026-06-05 23:10:30,576 - INFO - 1 change detected
+2026-06-05 23:10:31,738 - INFO - 3 changes detected
+2026-06-05 23:10:35,913 - INFO - 1 change detected
+2026-06-05 23:10:36,956 - INFO - 3 changes detected
+2026-06-05 23:12:12,376 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:12:36,449 - INFO - 1 change detected
+2026-06-05 23:12:36,964 - INFO - 1 change detected
+2026-06-05 23:12:38,331 - INFO - 1 change detected
+2026-06-05 23:12:40,460 - INFO - 3 changes detected
+2026-06-05 23:12:46,723 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:15:01,374 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:16:36,536 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:20:42,581 - INFO - 1 change detected
+2026-06-05 23:20:43,085 - INFO - 1 change detected
+2026-06-05 23:20:53,562 - INFO - 1 change detected
+2026-06-05 23:20:58,627 - INFO - 1 change detected
+2026-06-05 23:22:14,829 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:25:40,627 - INFO - 1 change detected
+2026-06-05 23:25:41,131 - INFO - 1 change detected
+2026-06-05 23:25:42,794 - INFO - 3 changes detected
+2026-06-05 23:34:41,336 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:37:02,912 - WARNING - Failed login attempt: incorrect password.
+2026-06-05 23:37:02,912 - WARNING - Unauthorized login attempt.
+2026-06-05 23:41:53,422 - INFO - 1 change detected
+2026-06-05 23:41:53,985 - INFO - 1 change detected
+2026-06-05 23:41:56,251 - INFO - 3 changes detected
+2026-06-05 23:43:18,167 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:53:56,954 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:54:52,256 - INFO - 1 change detected
+2026-06-05 23:54:52,788 - INFO - 1 change detected
+2026-06-05 23:54:55,317 - INFO - 3 changes detected
+2026-06-05 23:55:01,689 - INFO - 1 change detected
+2026-06-05 23:55:03,505 - INFO - 3 changes detected
+2026-06-05 23:55:14,827 - INFO - 1 change detected
+2026-06-05 23:55:15,919 - INFO - 3 changes detected
+2026-06-05 23:55:18,197 - INFO - 1 change detected
+2026-06-05 23:55:19,342 - INFO - 3 changes detected
+2026-06-05 23:55:26,818 - INFO - 1 change detected
+2026-06-05 23:55:28,125 - INFO - 3 changes detected
+2026-06-05 23:55:29,548 - INFO - 1 change detected
+2026-06-05 23:55:30,688 - INFO - 3 changes detected
+2026-06-05 23:55:57,139 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:55:57,453 - WARNING - Failed login attempt: incorrect password.
+2026-06-05 23:55:57,453 - WARNING - Unauthorized login attempt.
+2026-06-05 23:56:58,332 - INFO - 1 change detected
+2026-06-05 23:56:58,911 - INFO - 1 change detected
+2026-06-05 23:57:00,788 - INFO - 3 changes detected
+2026-06-05 23:57:01,455 - INFO - 1 change detected
+2026-06-05 23:57:02,507 - INFO - 3 changes detected
+2026-06-05 23:57:04,024 - INFO - 1 change detected
+2026-06-05 23:57:05,154 - INFO - 3 changes detected
+2026-06-05 23:57:07,045 - INFO - 1 change detected
+2026-06-05 23:57:08,315 - INFO - 3 changes detected
+2026-06-05 23:57:23,696 - INFO - 1 change detected
+2026-06-05 23:57:24,772 - INFO - 3 changes detected
+2026-06-05 23:58:25,517 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-05 23:59:05,395 - INFO - 1 change detected
+2026-06-05 23:59:05,936 - INFO - 1 change detected
+2026-06-05 23:59:06,503 - INFO - 3 changes detected
+2026-06-05 23:59:08,041 - INFO - 1 change detected
+2026-06-05 23:59:09,212 - INFO - 3 changes detected
+2026-06-05 23:59:18,499 - INFO - 1 change detected
+2026-06-05 23:59:19,909 - INFO - 3 changes detected
+2026-06-05 23:59:20,487 - INFO - 1 change detected
+2026-06-05 23:59:21,693 - INFO - 3 changes detected
+2026-06-05 23:59:22,052 - INFO - 1 change detected
+2026-06-05 23:59:23,250 - INFO - 3 changes detected
+2026-06-05 23:59:23,608 - INFO - 1 change detected
+2026-06-05 23:59:24,754 - INFO - 3 changes detected
+2026-06-05 23:59:46,034 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 00:05:17,967 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 00:05:18,302 - INFO - User with ID 1 logged in successfully.
+2026-06-06 00:38:53,504 - INFO - 1 change detected
+2026-06-06 00:38:54,092 - INFO - 1 change detected
+2026-06-06 00:38:57,099 - INFO - 3 changes detected
+2026-06-06 00:40:43,913 - INFO - 1 change detected
+2026-06-06 00:40:45,190 - INFO - 3 changes detected
+2026-06-06 00:41:02,866 - INFO - 1 change detected
+2026-06-06 00:41:05,490 - INFO - 1 change detected
+2026-06-06 00:41:11,115 - INFO - 1 change detected
+2026-06-06 00:41:12,071 - INFO - 3 changes detected
+2026-06-06 00:41:15,845 - INFO - 1 change detected
+2026-06-06 00:41:17,102 - INFO - 3 changes detected
+2026-06-06 00:42:19,663 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 00:42:19,972 - INFO - User with ID 1 logged in successfully.
+2026-06-06 01:03:59,818 - INFO - 1 change detected
+2026-06-06 01:04:00,316 - INFO - 1 change detected
+2026-06-06 01:04:02,692 - INFO - 3 changes detected
+2026-06-06 01:05:01,169 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 01:05:01,467 - INFO - User with ID 2 logged in successfully.
+2026-06-06 02:40:24,169 - INFO - 1 change detected
+2026-06-06 02:40:24,681 - INFO - 1 change detected
+2026-06-06 02:40:27,636 - INFO - 3 changes detected
+2026-06-06 02:40:46,221 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 02:40:46,524 - INFO - User with ID 2 logged in successfully.
+2026-06-06 15:34:17,431 - INFO - 1 change detected
+2026-06-06 15:45:59,097 - WARNING - Unauthorized login attempt.
+2026-06-06 15:46:43,440 - INFO - 1 change detected
+2026-06-06 15:46:43,968 - INFO - 1 change detected
+2026-06-06 15:46:44,748 - INFO - 3 changes detected
+2026-06-06 15:46:47,098 - INFO - 1 change detected
+2026-06-06 15:46:47,594 - INFO - 3 changes detected
+2026-06-06 15:47:09,015 - WARNING - Unauthorized login attempt.
+2026-06-06 15:47:37,708 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 15:47:38,441 - INFO - User with ID 3 logged in successfully.
+2026-06-06 16:04:19,359 - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/mac/Documents/linkit/venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-06-06 16:04:19,664 - INFO - User with ID 3 logged in successfully.
+2026-06-06 16:06:19,273 - INFO - User with ID 3 logged in successfully.
