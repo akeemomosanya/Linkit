@@ -6,7 +6,6 @@
 <title>Linkit — Sign in</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#06080f;--bg2:#0b0e1a;--bg3:#10142b;
@@ -16,100 +15,188 @@
   --text:#eef0ff;--text2:#8892b0;--text3:#3d4a6b;
   --danger:#ff5c7c;--r:10px;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Epilogue',sans-serif;font-size:15px;line-height:1.6}
-body::after{content:'';position:fixed;inset:0;opacity:.5}
-.page{min-height:100vh;display:flex;flex-direction:column}
-.card{width:100%;max-width:430px;margin:auto;background:var(--bg2);padding:2rem;border-radius:20px}
-.btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;cursor:pointer}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Epilogue',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.5}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.b1{width:600px;height:600px;background:rgba(79,110,247,0.1);top:-200px;left:-150px}
+.b2{width:400px;height:400px;background:rgba(167,139,250,0.08);bottom:-80px;right:-80px}
+
+.page{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:60px;border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2.2;stroke-linecap:round}
+.nav-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text)}
+.nav-back{font-size:13px;color:var(--text2);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem}
+
+.card{
+  width:100%;max-width:430px;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:2.5rem;
+  animation:fadeUp .45s ease both;
+}
+
+.card-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.4px;margin-bottom:.25rem}
+.card-sub{color:var(--text2);font-size:14px;margin-bottom:1.75rem;font-weight:300}
+
+.tabs{display:flex;background:rgba(255,255,255,0.03);border-radius:8px;padding:4px;margin-bottom:1.75rem;border:1px solid var(--border)}
+.tab{flex:1;padding:8px;text-align:center;font-size:14px;font-weight:500;border-radius:6px;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:none;font-family:'Epilogue',sans-serif}
+.tab.active{background:var(--bg3);color:var(--text)}
+
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px;font-weight:500}
+.field input{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:11px 14px;color:var(--text);
+  font-family:'Epilogue',sans-serif;font-size:15px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,110,247,0.2)}
+.field input::placeholder{color:var(--text3)}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.btn-primary{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;border-radius:var(--r);color:white;
+  font-family:'Epilogue',sans-serif;font-size:15px;font-weight:500;
+  cursor:pointer;margin-top:.25rem;transition:opacity .2s,transform .15s;
+}
+.btn-primary:hover{opacity:.88}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+
+.alert{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:1rem;display:none}
+.alert.error{background:rgba(255,92,124,0.1);border:1px solid rgba(255,92,124,0.25);color:#ff8fa6;display:block}
+.alert.success{background:rgba(34,211,165,0.1);border:1px solid rgba(34,211,165,0.25);color:var(--accent3);display:block}
+
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
-
 <body>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+
 <div class="page">
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <div class="nav-logo">
+        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </div>
+      <span class="nav-name">Linkit</span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </nav>
 
-<div class="card">
+  <div class="main">
+    <div class="card">
+      <div id="auth-alert" class="alert"></div>
 
-<div class="tabs">
-  <button onclick="switchTab('login')" id="tab-login">Sign in</button>
-  <button onclick="switchTab('register')" id="tab-register">Create account</button>
-</div>
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign in</button>
+        <button class="tab" id="tab-register" onclick="switchTab('register')">Create account</button>
+      </div>
 
-<!-- LOGIN -->
-<div id="form-login">
-  <input id="login-email" placeholder="Email" />
-  <input id="login-password" type="password" placeholder="Password" />
-  <button id="btn-login" onclick="doLogin()">Sign in</button>
-</div>
+      <div id="form-login">
+        <div class="card-title">Welcome back</div>
+        <div class="card-sub">Sign in to your Linkit account</div>
+        <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"/></div>
+        <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <button class="btn-primary" id="btn-login" onclick="doLogin()">Sign in</button>
+      </div>
 
-<!-- REGISTER -->
-<div id="form-register" style="display:none">
-  <input id="reg-first" placeholder="First name" />
-  <input id="reg-last" placeholder="Last name" />
-  <input id="reg-email" placeholder="Email" />
-  <input id="reg-password" type="password" placeholder="Password" />
-  <button id="btn-register" onclick="doRegister()">Create account</button>
-</div>
-
-</div>
+      <div id="form-register" style="display:none">
+        <div class="card-title">Create account</div>
+        <div class="card-sub">Start saving links for free, forever</div>
+        <div class="row-2">
+          <div class="field"><label>First name</label><input type="text" id="reg-first" placeholder="Ada"/></div>
+          <div class="field"><label>Last name</label><input type="text" id="reg-last" placeholder="Lovelace"/></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
+        <div class="field"><label>Password</label><input type="password" id="reg-password" placeholder="Min 8 chars, upper, lower, number, symbol"/></div>
+        <button class="btn-primary" id="btn-register" onclick="doRegister()">Create account</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-
 const API = 'https://linkit-1-4xd8.onrender.com';
 
-function switchTab(tab){
-  document.getElementById('form-login').style.display = tab==='login'?'block':'none';
-  document.getElementById('form-register').style.display = tab==='register'?'block':'none';
+const params = new URLSearchParams(location.search);
+if (params.get('tab') === 'register') switchTab('register');
+
+if (localStorage.getItem('ls_token')) location.href = 'links.html';
+
+function switchTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('form-login').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('form-register').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('tab-login').classList.toggle('active', isLogin);
+  document.getElementById('tab-register').classList.toggle('active', !isLogin);
+  clearAlert();
 }
 
-async function doLogin(){
-  const email = document.getElementById('login-email').value;
+function showAlert(msg, type='error') {
+  const el = document.getElementById('auth-alert');
+  el.textContent = msg; el.className = `alert ${type}`;
+}
+function clearAlert() {
+  const el = document.getElementById('auth-alert');
+  el.className = 'alert'; el.textContent = '';
+}
+function setLoading(id, on) {
+  const b = document.getElementById(id);
+  if(on){b._t=b.innerHTML;b.innerHTML='<span class="spinner"></span>';b.disabled=true}
+  else{b.innerHTML=b._t||b.innerHTML;b.disabled=false}
+}
+
+async function doLogin() {
+  clearAlert();
+  const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
-
-  const body = new URLSearchParams({
-    username: email,
-    password: password
-  });
-
-  const res = await fetch(`${API}/auth/token`, {
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body
-  });
-
-  const data = await res.json();
-
-  if(res.ok){
+  if(!email||!password) return showAlert('Please fill in all fields.');
+  setLoading('btn-login', true);
+  try {
+    const body = new URLSearchParams({username:email, password});
+    const res = await fetch(`${API}/auth/token`, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body});
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.detail||'Login failed');
     localStorage.setItem('ls_token', data.access_token);
     location.href = 'links.html';
-  } else {
-    alert(data.detail || 'Login failed');
-  }
+  } catch(e) { showAlert(e.message); }
+  finally { setLoading('btn-login', false); }
 }
 
-async function doRegister(){
-  const first_name = document.getElementById('reg-first').value;
-  const last_name  = document.getElementById('reg-last').value;
-  const email      = document.getElementById('reg-email').value;
+async function doRegister() {
+  clearAlert();
+  const first_name = document.getElementById('reg-first').value.trim();
+  const last_name  = document.getElementById('reg-last').value.trim();
+  const email      = document.getElementById('reg-email').value.trim();
   const password   = document.getElementById('reg-password').value;
-
-  const res = await fetch(`${API}/auth/`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({email,first_name,last_name,password})
-  });
-
-  const data = await res.json();
-
-  if(res.ok){
-    alert('Account created! Please login.');
-    switchTab('login');
-  } else {
-    alert(data.detail || 'Registration failed');
-  }
+  if(!first_name||!last_name||!email||!password) return showAlert('Please fill in all fields.');
+  setLoading('btn-register', true);
+  try {
+    const res = await fetch(`${API}/auth/`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,first_name,last_name,password})});
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.detail||'Registration failed');
+    showAlert('Account created! Signing you in…', 'success');
+    // auto login
+    const body = new URLSearchParams({username:email, password});
+    const res2 = await fetch(`${API}/auth/token`, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body});
+    const data2 = await res2.json();
+    if(res2.ok){ localStorage.setItem('ls_token', data2.access_token); setTimeout(()=>location.href='links.html', 800); }
+    else switchTab('login');
+  } catch(e) { showAlert(e.message); }
+  finally { setLoading('btn-register', false); }
 }
-
 </script>
-
 </body>
 </html>
