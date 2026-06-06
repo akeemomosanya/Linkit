@@ -11,4 +11,4 @@ engine = create_engine("postgresql://linkit_user:RU5oHWe4lKO2ehQV7EsIbiMWyWRz894
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+Base = declarative_base() 
