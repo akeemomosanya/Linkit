@@ -1,5 +1,4 @@
 import logging
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -17,16 +16,9 @@ from routers import auth, links
 
 app = FastAPI()
 
-from fastapi.middleware.cors import CORSMiddleware
-
-origins = [
-    "http://localhost:3000",
-    "https://linkit.vercel.app",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],        
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
